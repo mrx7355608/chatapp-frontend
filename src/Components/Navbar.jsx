@@ -11,7 +11,8 @@ export default function Navbar() {
         <Flex
             // bgColor="whiteAlpha.600"
             backdropFilter="blur(2px)"
-            position="fixed"
+            position="sticky"
+            zIndex="20"
             shadow="sm"
             top="0"
             w="full"

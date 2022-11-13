@@ -22,8 +22,7 @@ export default function Signup() {
             <Container
                 maxWidth="450px"
                 rounded="lg"
-                mt="40"
-                mb="20"
+                my="4"
                 p="6"
                 bgColor={colorMode === "light" ? "gray.50" : "gray.700"}
             >
