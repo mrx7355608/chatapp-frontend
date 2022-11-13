@@ -1,0 +1,19 @@
+/* F3664C => orange */
+/* FCAF3C => yellow */
+/* C62368 => pink */
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #1a1a1a;
+}
+main {
+    background-image: url("/bg.svg");
+    background-size: cover;
+    background-position: center;
+    background-position-y: 70%;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+}
