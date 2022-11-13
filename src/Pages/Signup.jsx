@@ -1,5 +1,97 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable object-curly-newline */
 import React from "react";
+import {
+    Button,
+    Container,
+    Flex,
+    Heading,
+    Input,
+    useColorMode,
+    Text,
+} from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
-  return <div>Signup</div>;
+    const { colorMode } = useColorMode();
+    return (
+        <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
+            <Container
+                maxWidth="450px"
+                rounded="lg"
+                mt="40"
+                mb="20"
+                p="6"
+                bgColor={colorMode === "light" ? "gray.50" : "gray.700"}
+            >
+                <Heading textAlign="center" mt="6" mb="8">
+                    Signup
+                </Heading>
+                <Input
+                    type="text"
+                    variant="filled"
+                    bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                    pt="1"
+                    size="lg"
+                    mb="3"
+                    placeholder="First name"
+                />
+                <Input
+                    type="text"
+                    variant="filled"
+                    bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                    pt="1"
+                    size="lg"
+                    mb="3"
+                    placeholder="Last name"
+                />
+                <Input
+                    type="text"
+                    variant="filled"
+                    bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                    pt="1"
+                    size="lg"
+                    mb="3"
+                    placeholder="Username"
+                />
+                <Input
+                    type="password"
+                    variant="filled"
+                    bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                    pt="1"
+                    size="lg"
+                    mb="3"
+                    placeholder="Password"
+                />
+                <Input
+                    type="password"
+                    bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                    variant="filled"
+                    pt="1"
+                    size="lg"
+                    mb="8"
+                    placeholder="Confirm Password"
+                />
+                <Button
+                    size="md"
+                    pt="1"
+                    w="full"
+                    color="white"
+                    bgColor="#F3664C"
+                >
+                    Login
+                </Button>
+                <Text
+                    textAlign="center"
+                    color={colorMode === "light" ? "gray.700" : "gray.200"}
+                    my="5"
+                >
+                    Don't have an account?
+                    <Text as="b" color="red.500">
+                        <Link to="/signup">Signup</Link>
+                    </Text>
+                </Text>
+            </Container>
+        </Flex>
+    );
 }
