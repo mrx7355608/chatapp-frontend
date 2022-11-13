@@ -57,7 +57,7 @@ export default function Login() {
                     color={colorMode === "light" ? "gray.700" : "gray.200"}
                     my="5"
                 >
-                    Don't have an account?
+                    Don't have an account?{" "}
                     <Text as="b" color="red.500">
                         <Link to="/signup">Signup</Link>
                     </Text>

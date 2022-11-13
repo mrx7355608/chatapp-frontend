@@ -8,7 +8,16 @@ import DarkModeToggle from "./Custom/DarkModeToggle";
 export default function Navbar() {
     const { colorMode } = useColorMode();
     return (
-        <Flex position="fixed" top="0" w="full" py="7" justify="space-around">
+        <Flex
+            // bgColor="whiteAlpha.600"
+            backdropFilter="blur(2px)"
+            position="fixed"
+            shadow="sm"
+            top="0"
+            w="full"
+            py="5"
+            justify="space-around"
+        >
             {/* LOGO */}
             <Flex alignItems="center">
                 <GiChatBubble color="#F3664C" size="30px" />

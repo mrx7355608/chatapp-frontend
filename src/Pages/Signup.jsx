@@ -79,16 +79,16 @@ export default function Signup() {
                     color="white"
                     bgColor="#F3664C"
                 >
-                    Login
+                    Signup
                 </Button>
                 <Text
                     textAlign="center"
                     color={colorMode === "light" ? "gray.700" : "gray.200"}
                     my="5"
                 >
-                    Don't have an account?
+                    Already have an account?{" "}
                     <Text as="b" color="red.500">
-                        <Link to="/signup">Signup</Link>
+                        <Link to="/login">Login</Link>
                     </Text>
                 </Text>
             </Container>
