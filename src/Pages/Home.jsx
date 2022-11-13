@@ -1,6 +1,8 @@
 // eslint-disable-next-line object-curly-newline
 import { Flex, Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
+import CreateRoom from "../Components/CreateRoom";
+import JoinRoom from "../Components/JoinRoom";
 
 export default function Home() {
     return (
@@ -14,12 +16,8 @@ export default function Home() {
                 Lets chat...
             </Heading>
             <Box mt="8" w="max-content" mx="auto">
-                <Button pt="0.5" color="white" bgColor="#F3664C" mr="8">
-                    Create Room
-                </Button>
-                <Button pt="0.5" color="white" bgColor="#F3664C">
-                    Join Room
-                </Button>
+                <CreateRoom />
+                <JoinRoom />
             </Box>
         </Flex>
     );
