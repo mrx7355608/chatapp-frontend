@@ -8,6 +8,8 @@ import "./assets/main.css";
 import Home from "./Pages/Home";
 // Theme
 import myTheme from "./theme";
+// Components
+import MySpinner from "./Components/Custom/MySpinner";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -25,7 +27,7 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: (
-                    <React.Suspense fallback={<h1>Loading.....</h1>}>
+                    <React.Suspense fallback={<MySpinner />}>
                         <Login />
                     </React.Suspense>
                 ),
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
             {
                 path: "/signup",
                 element: (
-                    <React.Suspense fallback={<h1>Loading.....</h1>}>
+                    <React.Suspense fallback={<MySpinner />}>
                         <Signup />
                     </React.Suspense>
                 ),
