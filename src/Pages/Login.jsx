@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable object-curly-newline */
 import React from "react";
 import {
@@ -14,9 +15,9 @@ import { Link } from "react-router-dom";
 export default function Login() {
     const { colorMode } = useColorMode();
     return (
-        <Flex alignItems="center" justify="center" w="100vw" h="100vh">
+        <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
             <Container
-                maxWidth="450px"
+                maxWidth="420px"
                 rounded="lg"
                 p="6"
                 bgColor={colorMode === "light" ? "gray.50" : "gray.700"}
@@ -56,7 +57,7 @@ export default function Login() {
                     color={colorMode === "light" ? "gray.700" : "gray.200"}
                     my="5"
                 >
-                    Don't have an account?{" "}
+                    Don't have an account?
                     <Text as="b" color="red.500">
                         <Link to="/signup">Signup</Link>
                     </Text>
