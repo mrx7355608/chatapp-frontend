@@ -43,6 +43,18 @@ export default function Navbar() {
                         HOME
                     </Text>
                 </Link>
+                <Link to="/room">
+                    <Text
+                        color={colorMode === "light" ? "gray.700" : "white"}
+                        as="b"
+                        fontSize="xs"
+                        _hover={{
+                            color: "#F3664C",
+                        }}
+                    >
+                        ROOM
+                    </Text>
+                </Link>
                 <Link to="/login">
                     <Text
                         color={colorMode === "light" ? "gray.700" : "white"}
