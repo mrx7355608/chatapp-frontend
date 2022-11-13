@@ -9,11 +9,14 @@ import {
     Input,
     useColorMode,
     Text,
+    Spinner,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
     const { colorMode } = useColorMode();
+    const [loading, setLoading] = React.useState(false);
+
     return (
         <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
             <Container
@@ -72,15 +75,29 @@ export default function Signup() {
                     mb="8"
                     placeholder="Confirm Password"
                 />
-                <Button
-                    size="md"
-                    pt="1"
-                    w="full"
-                    color="white"
-                    bgColor="#F3664C"
-                >
-                    Signup
-                </Button>
+                {loading ? (
+                    <Button
+                        disabled
+                        size="md"
+                        w="full"
+                        color="white"
+                        bgColor="#F3664C"
+                    >
+                        <Spinner mr="2" size="sm" />
+                        <Text pt="1">Signing up...</Text>
+                    </Button>
+                ) : (
+                    <Button
+                        size="md"
+                        pt="1"
+                        w="full"
+                        color="white"
+                        bgColor="#F3664C"
+                    >
+                        Signup
+                    </Button>
+                )}
+
                 <Text
                     textAlign="center"
                     color={colorMode === "light" ? "gray.700" : "gray.200"}
