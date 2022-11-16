@@ -1,14 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { GiChatBubble } from "react-icons/gi";
+import { FaRocketchat } from "react-icons/fa";
 // eslint-disable-next-line object-curly-newline
-import { Image, useColorMode, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+    Button,
+    Image,
+    useColorMode,
+    Flex,
+    Heading,
+    Text,
+} from "@chakra-ui/react";
 import DarkModeToggle from "./Custom/DarkModeToggle";
 import UserContext from "../Contexts/UserContext";
+import { setAccessToken } from "../accessToken";
+import { logoutUser } from "../requests/authRequests";
 
 export default function Navbar() {
-    const { user } = React.useContext(UserContext);
+    const { user, setUser } = React.useContext(UserContext);
     const { colorMode } = useColorMode();
+
     return (
         <Flex
             // bgColor="whiteAlpha.600"
@@ -23,7 +33,7 @@ export default function Navbar() {
         >
             {/* LOGO */}
             <Flex alignItems="center">
-                <GiChatBubble color="#F3664C" size="30px" />
+                <FaRocketchat color="#F3664C" size="30px" />
                 <Heading
                     color={colorMode === "light" ? "gray.700" : "white"}
                     ml="2"
@@ -82,6 +92,22 @@ export default function Navbar() {
                                 {user.fullname}
                             </Text>
                         </Flex>
+                        <Button
+                            onClick={async () => {
+                                const isLoggedOut = await logoutUser();
+                                if (!isLoggedOut) return;
+                                setUser(null);
+                                setAccessToken("");
+                            }}
+                            p="3"
+                            pt="3.5"
+                            rounded="lg"
+                            bgColor="red.500"
+                        >
+                            <Text color="white" as="b" fontSize="xs">
+                                LOGOUT
+                            </Text>
+                        </Button>
                     </>
                 ) : (
                     <>
