@@ -8,8 +8,7 @@ import UserContext from "./Contexts/UserContext";
 // Components
 import Navbar from "./Components/Navbar";
 // Requests functions
-import refreshToken from "./requests/refreshToken";
-import fetchUser from "./requests/fetchUser";
+import { fetchUser, refreshToken } from "./requests/authRequests";
 import MySpinner from "./Components/Custom/MySpinner";
 
 function App() {
