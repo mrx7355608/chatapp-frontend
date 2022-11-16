@@ -1,4 +1,5 @@
-import { redirect } from "react-router-dom";
+import { setAccessToken } from "../accessToken";
+import { fetchUser } from "../requests/authRequests";
 
 const loginAction = async ({ request }) => {
     const formData = await request.formData();
@@ -32,12 +33,14 @@ const loginAction = async ({ request }) => {
             body: JSON.stringify(userData),
         };
         const apiResponse = await fetch(url, options);
+        const apiData = await apiResponse.json();
         if (!apiResponse.ok) {
-            const apiData = await apiResponse.json();
             errors.apiError = apiData.message;
             return errors;
         }
-        return redirect("/");
+        setAccessToken(apiData.accessToken);
+        const apiRes = await fetchUser();
+        return { user: apiRes.data };
     } catch (err) {
         if (err.name === "TypeError") {
             throw new Response("It seems that the server is down!", {

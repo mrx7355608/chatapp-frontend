@@ -60,9 +60,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    // <React.StrictMode>
-    <ChakraProvider theme={myTheme}>
-        <RouterProvider router={router} />
-    </ChakraProvider>
-    // </React.StrictMode>
+    <React.StrictMode>
+        <ChakraProvider theme={myTheme}>
+            <RouterProvider router={router} />
+        </ChakraProvider>
+    </React.StrictMode>
 );
