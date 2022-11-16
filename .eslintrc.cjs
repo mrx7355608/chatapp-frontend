@@ -16,5 +16,6 @@ module.exports = {
         "comma-dangle": "off",
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
+        "object-curly-newline": "off",
     },
 };
