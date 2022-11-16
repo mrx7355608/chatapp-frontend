@@ -9,17 +9,21 @@ import myTheme from "./theme";
 // Components
 import MySpinner from "./Components/Custom/MySpinner";
 // Pages
-import Home from "./Pages/Home";
+import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
+// actions
+import signupAction from "./actions/signup";
+import loginAction from "./actions/login";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
 const Room = React.lazy(() => import("./Pages/Room"));
+const Home = React.lazy(() => import("./Pages/Home"));
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        errorElement: "",
+        errorElement: <RootErrorBoundary />,
         children: [
             {
                 element: <Home />,
@@ -27,6 +31,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/login",
+                action: loginAction,
                 element: (
                     <React.Suspense fallback={<MySpinner />}>
                         <Login />
@@ -35,6 +40,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/signup",
+                action: signupAction,
                 element: (
                     <React.Suspense fallback={<MySpinner />}>
                         <Signup />
@@ -54,9 +60,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <ChakraProvider theme={myTheme}>
-            <RouterProvider router={router} />
-        </ChakraProvider>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <ChakraProvider theme={myTheme}>
+        <RouterProvider router={router} />
+    </ChakraProvider>
+    // </React.StrictMode>
 );
