@@ -11,14 +11,12 @@ import {
     Text,
 } from "@chakra-ui/react";
 import DarkModeToggle from "./Custom/DarkModeToggle";
-import UserContext from "../Contexts/UserContext";
-import { setAccessToken } from "../accessToken";
+import { useAuth } from "../Contexts/AuthContext";
 import { logoutUser } from "../requests/authRequests";
 
 export default function Navbar() {
-    const { user, setUser } = React.useContext(UserContext);
+    const { state: user, dispatch } = useAuth();
     const { colorMode } = useColorMode();
-
     return (
         <Flex
             // bgColor="whiteAlpha.600"
