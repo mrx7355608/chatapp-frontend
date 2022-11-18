@@ -51,7 +51,7 @@ const signupAction = async ({ request }) => {
         }
         return redirect("/login");
     } catch (err) {
-        if (err.name === "TypeError") {
+        if (err.name === "TypeError" || err.name === "NetworkError") {
             throw new Response("It seems that the server is down!", {
                 status: 500,
             });

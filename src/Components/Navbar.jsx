@@ -91,18 +91,13 @@ export default function Navbar() {
                             </Text>
                         </Flex>
                         <Button
-                            onClick={async () => {
-                                const isLoggedOut = await logoutUser();
-                                if (!isLoggedOut) return;
-                                setUser(null);
-                                setAccessToken("");
-                            }}
                             p="3"
-                            pt="3.5"
-                            rounded="lg"
                             bgColor="red.500"
+                            color="white"
+                            onClick={handleLogout}
+                            rounded="lg"
                         >
-                            <Text color="white" as="b" fontSize="xs">
+                            <Text as="b" fontSize="xs">
                                 LOGOUT
                             </Text>
                         </Button>

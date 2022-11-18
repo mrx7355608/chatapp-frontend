@@ -8,30 +8,26 @@ const loginAction = async ({ request }) => {
 
     const errors = {};
 
-    if (typeof username !== "string") {
+    if (typeof username !== "string" || username.length < 1) {
         errors.username = "Enter a valid username";
-    } else if (typeof password !== "string") {
+    } else if (typeof password !== "string" || password.length < 1) {
         errors.password = "Enter a valid password";
     }
-
     if (Object.keys(errors).length) return errors;
 
     // Login api call
+    const url = `${import.meta.env.VITE_API_URL}/auth/login`;
+    const options = {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+    };
     try {
-        const userData = {
-            username,
-            password,
-        };
-        const url = `${import.meta.env.VITE_API_URL}/auth/login`;
-        const options = {
-            method: "POST",
-            mode: "cors",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-        };
+        // Login user
         const apiResponse = await fetch(url, options);
         const apiData = await apiResponse.json();
         if (!apiResponse.ok) {
@@ -39,12 +35,14 @@ const loginAction = async ({ request }) => {
             return errors;
         }
         setAccessToken(apiData.accessToken);
+
+        // If everything goes right, then fetch user
         const apiRes = await fetchUser();
         return { user: apiRes.data };
     } catch (err) {
-        if (err.name === "TypeError") {
+        if (err.name === "TypeError" || err.name === "NetworkError") {
             throw new Response("It seems that the server is down!", {
-                status: 500,
+                status: 503,
             });
         }
         throw new Response("Something went wrong!", { status: 500 });

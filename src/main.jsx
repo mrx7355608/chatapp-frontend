@@ -32,28 +32,16 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 action: loginAction,
-                element: (
-                    <React.Suspense fallback={<MySpinner />}>
-                        <Login />
-                    </React.Suspense>
-                ),
+                element: <Login />,
             },
             {
                 path: "/signup",
                 action: signupAction,
-                element: (
-                    <React.Suspense fallback={<MySpinner />}>
-                        <Signup />
-                    </React.Suspense>
-                ),
+                element: <Signup />,
             },
             {
                 path: "/room",
-                element: (
-                    <React.Suspense fallback={<MySpinner />}>
-                        <Room />
-                    </React.Suspense>
-                ),
+                element: <Room />,
             },
         ],
     },
