@@ -62,7 +62,7 @@ export default function LoginForm({ loginErrors, navigation }) {
                     bgColor="#F3664C"
                 >
                     <Spinner mr="2" size="sm" />
-                    <Text pt="1">Logging up...</Text>
+                    <Text pt="1">Logging in...</Text>
                 </Button>
             ) : (
                 <Button
