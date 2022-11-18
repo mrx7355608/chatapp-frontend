@@ -8,20 +8,20 @@ import {
     useNavigate,
 } from "react-router-dom";
 import LoginForm from "../Components/LoginForm";
-import UserContext from "../Contexts/UserContext";
+import { useAuth } from "../Contexts/AuthContext";
 
 export default function Signup() {
     const navigation = useNavigation();
     const goto = useNavigate();
     const { colorMode } = useColorMode();
-    const { setUser } = React.useContext(UserContext);
+    const { dispatch } = useAuth();
 
     const loginData = useActionData();
+
     // eslint-disable-next-line consistent-return
     React.useEffect(() => {
         if (loginData && loginData.user) {
-            console.log(loginData);
-            setUser(loginData.user);
+            dispatch({ type: "LOGIN", user: loginData.user });
             return goto("/");
         }
     }, [loginData]);
