@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Text, useColorMode, Spinner, Button } from "@chakra-ui/react";
-import axios from "axios";
 import { useAuth } from "../Contexts/AuthContext";
+import useLogin from "../Hooks/useLogin";
 
 export default function LoginForm() {
     const [loginData, setLoginData] = React.useState({
@@ -9,7 +9,9 @@ export default function LoginForm() {
         password: "",
     });
     const { colorMode } = useColorMode();
-    const { state, dispatch } = useAuth();
+    const { state } = useAuth();
+    const login = useLogin();
+    const { error } = state;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,35 +19,12 @@ export default function LoginForm() {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch({ type: "MAKE_REQUEST" });
-        const apiUrl = `${import.meta.env.VITE_API_URL}/auth/login`;
-        axios
-            .post(apiUrl, loginData, { withCredentials: true })
-            .then((resp) => console.log(resp.json()))
-            .catch((err) => {
-                if (err.response) {
-                    // other than 2xx status code errors
-                    const errorMessage = err.response.data.message;
-                    dispatch({ type: "LOGIN_ERROR", error: errorMessage });
-                } else if (err.request) {
-                    // Didn't received a response
-                    dispatch({
-                        type: "LOGIN_ERROR",
-                        error: "There was a problem while making request to the server",
-                    });
-                } else {
-                    // Some error that occured while setting up the request
-                    dispatch({
-                        type: "LOGIN_ERROR",
-                        error: "There was a problem while making request to the server",
-                    });
-                }
-            });
+        login(loginData);
     };
 
     return (
         <form onSubmit={(e) => handleSubmit(e)} method="post">
-            {state.error && (
+            {error.type === "api" && (
                 <Text
                     w="full"
                     p="3"
@@ -55,7 +34,7 @@ export default function LoginForm() {
                     pt="3.5"
                     mt="3"
                 >
-                    {state.error}
+                    {error.message}
                 </Text>
             )}
             <Input
@@ -69,11 +48,9 @@ export default function LoginForm() {
                 placeholder="Username"
                 onChange={(e) => handleChange(e)}
             />
-            {/* {loginErrors?.username && (
-                <Text mt="1" fontSize="sm" as="b" color="red.500">
-                    {loginErrors.username}
-                </Text>
-            )} */}
+            <Text color="red.500">
+                {error.type === "username" && error.message}
+            </Text>
             <Input
                 type="password"
                 name="password"
@@ -85,11 +62,9 @@ export default function LoginForm() {
                 mt="3"
                 onChange={(e) => handleChange(e)}
             />
-            {/* {loginErrors?.password && (
-                <Text mt="1" fontSize="sm" as="b" color="red.500">
-                    {loginErrors.password}
-                </Text>
-            )} */}
+            <Text color="red.500">
+                {error.type === "password" && error.message}
+            </Text>
             {state.isPending ? (
                 <Button
                     mt="8"
