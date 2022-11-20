@@ -14,6 +14,7 @@ export default function useGetUser(dispatch) {
             try {
                 // Refresh token
                 const data = await refreshToken();
+
                 if (!data) return setLoading(false);
                 setAccessToken(data.accessToken);
 
@@ -22,6 +23,7 @@ export default function useGetUser(dispatch) {
                 dispatch({ type: "LOGIN", user: response.data });
                 setLoading(false);
             } catch (err) {
+                setLoading(false);
                 setError(err);
             }
         })();

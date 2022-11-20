@@ -8,8 +8,7 @@ export default function RootErrorBoundary() {
 
     return (
         <>
-            {console.log(error)}
-            <Heading>Un-expected error occured</Heading>
+            <Heading>WhoOps!</Heading>
             <Text>{error.message}</Text>
         </>
     );
