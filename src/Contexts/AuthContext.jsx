@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
     const initialState = {
         user: {},
         accessToken: undefined,
-        error: undefined,
+        error: {},
         isPending: false,
     };
     const reducer = (state, action) => {
@@ -24,6 +24,7 @@ function AuthProvider({ children }) {
                     ...state,
                     isPending: false,
                     accessToken: action.token,
+                    error: {},
                 };
 
             case "LOGOUT":
