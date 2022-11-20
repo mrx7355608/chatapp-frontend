@@ -1,30 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { Container, Flex, Heading, useColorMode, Text } from "@chakra-ui/react";
-import {
-    Link,
-    useActionData,
-    useNavigation,
-    useNavigate,
-} from "react-router-dom";
+import { Link, useNavigation, useNavigate } from "react-router-dom";
 import LoginForm from "../Components/LoginForm";
 import { useAuth } from "../Contexts/AuthContext";
 
 export default function Signup() {
-    const navigation = useNavigation();
-    const goto = useNavigate();
     const { colorMode } = useColorMode();
-    const { dispatch } = useAuth();
-
-    const loginData = useActionData();
-
-    // eslint-disable-next-line consistent-return
-    React.useEffect(() => {
-        if (loginData && loginData.user) {
-            dispatch({ type: "LOGIN", user: loginData.user });
-            return goto("/");
-        }
-    }, [loginData]);
 
     return (
         <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
@@ -38,7 +20,7 @@ export default function Signup() {
                 <Heading textAlign="center" mt="6" mb="8">
                     Login
                 </Heading>
-                <LoginForm loginErrors={loginData} navigation={navigation} />
+                <LoginForm />
                 <Text
                     textAlign="center"
                     color={colorMode === "light" ? "gray.700" : "gray.200"}

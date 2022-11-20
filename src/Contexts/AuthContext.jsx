@@ -8,22 +8,37 @@ const AuthContext = React.createContext(null);
 const useAuth = () => React.useContext(AuthContext);
 
 function AuthProvider({ children }) {
+    const initialState = {
+        user: {},
+        accessToken: undefined,
+        error: undefined,
+        isPending: false,
+    };
     const reducer = (state, action) => {
         switch (action.type) {
+            case "MAKE_REQUEST":
+                return { ...state, isPending: true };
+
             case "LOGIN":
-                return action.user;
+                return {
+                    ...state,
+                    isPending: false,
+                    accessToken: action.token,
+                };
+
             case "LOGOUT":
-                return null;
-            default:
                 return state;
+
+            case "LOGIN_ERROR":
+                return { ...state, isPending: false, error: action.error };
         }
     };
-    const [state, dispatch] = React.useReducer(reducer, null);
+    const [state, dispatch] = React.useReducer(reducer, initialState);
 
-    // TODO: Handle api errors
-    const { loading, error } = useGetUser(dispatch);
+    // const { loading, error } = useGetUser(dispatch);
 
-    if (loading) return <MySpinner />;
+    // if (error) throw new Error("It seems that the server is down");
+    // if (loading) return <MySpinner />;
 
     return (
         <AuthContext.Provider value={{ state, dispatch }}>

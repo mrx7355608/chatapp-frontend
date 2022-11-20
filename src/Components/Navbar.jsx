@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 import DarkModeToggle from "./Custom/DarkModeToggle";
 import { useAuth } from "../Contexts/AuthContext";
-import { logoutUser } from "../requests/authRequests";
 
 export default function Navbar() {
-    const { state: user, dispatch } = useAuth();
+    const { state, dispatch } = useAuth();
     const { colorMode } = useColorMode();
+
     return (
         <Flex
             // bgColor="whiteAlpha.600"
@@ -54,7 +54,7 @@ export default function Navbar() {
                         HOME
                     </Text>
                 </Link>
-                {user ? (
+                {Object.keys(state.user).length ? (
                     <>
                         <Link to="/room">
                             <Text
@@ -75,7 +75,10 @@ export default function Navbar() {
                                 display="inline"
                                 w="40px"
                                 rounded="full"
-                                src={import.meta.env.VITE_API_URL + user.photo}
+                                src={
+                                    import.meta.env.VITE_API_URL +
+                                    state.user.photo
+                                }
                             />
                             <Text
                                 color={
@@ -87,14 +90,13 @@ export default function Navbar() {
                                     color: "#F3664C",
                                 }}
                             >
-                                {user.fullname}
+                                {state.user.fullname}
                             </Text>
                         </Flex>
                         <Button
                             p="3"
                             bgColor="red.500"
                             color="white"
-                            onClick={handleLogout}
                             rounded="lg"
                         >
                             <Text as="b" fontSize="xs">
