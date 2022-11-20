@@ -15,10 +15,19 @@ import {
 } from "@chakra-ui/react";
 
 export default function CreateRoom() {
+    const [formdata, setFormData] = React.useState({
+        roomName: "",
+        roomPassword: "",
+    });
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formdata, [name]: value });
+    };
 
-    const initialRef = React.useRef(null);
-
+    const handleSubmit = () => {
+        console.log(formdata);
+    };
     return (
         <>
             <Button
@@ -30,11 +39,7 @@ export default function CreateRoom() {
             >
                 Create Room
             </Button>
-            <Modal
-                initialFocusRef={initialRef}
-                isOpen={isOpen}
-                onClose={onClose}
-            >
+            <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Create Room</ModalHeader>
@@ -42,17 +47,27 @@ export default function CreateRoom() {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Room name</FormLabel>
-                            <Input ref={initialRef} placeholder="Room name" />
+                            <Input
+                                onChange={(e) => handleChange(e)}
+                                name="roomName"
+                                placeholder="Room name"
+                                type="text"
+                            />
                         </FormControl>
 
                         <FormControl mt={4}>
-                            <FormLabel>Password (optional)</FormLabel>
-                            <Input placeholder="Password" />
+                            <FormLabel>Password</FormLabel>
+                            <Input
+                                onChange={(e) => handleChange(e)}
+                                name="roomPassword"
+                                placeholder="Password"
+                                type="password"
+                            />
                         </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="red" mr={3}>
+                        <Button onClick={handleSubmit} colorScheme="red" mr={3}>
                             Create
                         </Button>
                         <Button onClick={onClose}>Cancel</Button>
