@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React from "react";
 import MySpinner from "../Components/Custom/MySpinner";
-import useGetUser from "../Hooks/useGetUser";
 
 const AuthContext = React.createContext(null);
 
@@ -35,11 +34,6 @@ function AuthProvider({ children }) {
         }
     };
     const [state, dispatch] = React.useReducer(reducer, initialState);
-
-    // const { loading, error } = useGetUser(dispatch);
-
-    // if (error) throw new Error("It seems that the server is down");
-    // if (loading) return <MySpinner />;
 
     return (
         <AuthContext.Provider value={{ state, dispatch }}>

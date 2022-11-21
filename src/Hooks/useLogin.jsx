@@ -1,4 +1,5 @@
 import axios from "axios";
+import { redirect } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext";
 
 export default function useLogin() {
@@ -29,6 +30,7 @@ export default function useLogin() {
                     type: "LOGIN",
                     token: resp.data.accessToken,
                 });
+                return redirect("/"); // WARNING: Didn't redirect
             })
             .catch((err) => {
                 if (err.response) {
