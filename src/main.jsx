@@ -4,15 +4,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
 import "./assets/main.css";
+// Contexts
+import { AuthProvider } from "./Contexts/AuthContext";
 // Theme
 import myTheme from "./theme";
-// Components
-import MySpinner from "./Components/Custom/MySpinner";
 // Pages
 import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
-// actions
-import signupAction from "./actions/signup";
-import loginAction from "./actions/login";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -22,7 +19,11 @@ const Home = React.lazy(() => import("./Pages/Home"));
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: (
+            <AuthProvider>
+                <App />
+            </AuthProvider>
+        ),
         errorElement: <RootErrorBoundary />,
         children: [
             {

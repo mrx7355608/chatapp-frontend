@@ -3,23 +3,29 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 // Contexts
-import { AuthProvider } from "./Contexts/AuthContext";
+import { useAuth } from "./Contexts/AuthContext";
 // Components
 import Navbar from "./Components/Navbar";
 import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
-// Requests functions
 import MySpinner from "./Components/Custom/MySpinner";
 
 function App() {
+    const { state, dispatch } = useAuth();
+
+    React.useEffect(() => {
+        // TODO: Fetch user
+        console.log("Fetching user...");
+    }, [state.accessToken]);
+
     return (
-        <AuthProvider>
+        <>
             <Navbar />
             <ErrorBoundary FallbackComponent={OutletErrorBoundary}>
                 <React.Suspense fallback={<MySpinner />}>
                     <Outlet />
                 </React.Suspense>
             </ErrorBoundary>
-        </AuthProvider>
+        </>
     );
 }
 
