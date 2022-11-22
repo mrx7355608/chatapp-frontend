@@ -10,11 +10,13 @@ import {
     Heading,
     Text,
 } from "@chakra-ui/react";
-import DarkModeToggle from "./Custom/DarkModeToggle";
+import useLogout from "../Hooks/useLogout";
 import { useAuth } from "../Contexts/AuthContext";
+import DarkModeToggle from "./Custom/DarkModeToggle";
 
 export default function Navbar() {
-    const { state, dispatch } = useAuth();
+    const { state } = useAuth();
+    const logout = useLogout();
     const { colorMode } = useColorMode();
 
     return (
@@ -98,6 +100,7 @@ export default function Navbar() {
                             bgColor="red.500"
                             color="white"
                             rounded="lg"
+                            onClick={logout}
                         >
                             <Text as="b" fontSize="xs">
                                 LOGOUT

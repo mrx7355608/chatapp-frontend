@@ -1,21 +1,52 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React from "react";
+import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 // Contexts
-import { useAuth } from "./Contexts/AuthContext";
+import { AuthProvider, useAuth } from "./Contexts/AuthContext";
 // Components
 import Navbar from "./Components/Navbar";
-import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
 import MySpinner from "./Components/Custom/MySpinner";
+import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
 
 function App() {
     const { state, dispatch } = useAuth();
 
+    // Refresh token
     React.useEffect(() => {
-        // TODO: Fetch user
+        const url = `${import.meta.env.VITE_API_URL}/auth/refresh-token`;
+        axios
+            .post(url, null, { withCredentials: true })
+            .then((resp) => {
+                dispatch({
+                    type: "REFRESH_TOKEN",
+                    token: resp.data.accessToken || undefined,
+                    error: {},
+                });
+            })
+            .catch((err) => null);
+    }, []);
+
+    // Fetch user data
+    React.useEffect(() => {
+        if (!state.accessToken) return;
         console.log("Fetching user...");
+        const url = `${import.meta.env.VITE_API_URL}/user`;
+        axios
+            .get(url, {
+                headers: { authorization: `Bearer ${state.accessToken}` },
+            })
+            .then((resp) => {
+                dispatch({
+                    type: "FETCHED_USER",
+                    user: resp.data.data,
+                });
+            })
+            .catch((err) => null);
     }, [state.accessToken]);
+
+    console.log(state);
 
     return (
         <>

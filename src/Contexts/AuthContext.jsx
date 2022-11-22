@@ -23,18 +23,31 @@ function AuthProvider({ children }) {
                     ...state,
                     isPending: false,
                     accessToken: action.token,
-                    error: {},
+                    error: action.error,
+                };
+
+            case "REFRESH_TOKEN":
+                return {
+                    ...state,
+                    accessToken: action.token,
+                    error: action.error,
+                };
+
+            case "FETCHED_USER":
+                return {
+                    ...state,
+                    user: action.user,
                 };
 
             case "LOGOUT":
-                return state;
-
-            case "LOGIN_ERROR":
-                return { ...state, isPending: false, error: action.error };
+                return {
+                    ...state,
+                    user: {},
+                    accessToken: undefined,
+                };
         }
     };
     const [state, dispatch] = React.useReducer(reducer, initialState);
-
     return (
         <AuthContext.Provider value={{ state, dispatch }}>
             {children}
