@@ -19,11 +19,7 @@ const Home = React.lazy(() => import("./Pages/Home"));
 const router = createBrowserRouter([
     {
         path: "/",
-        element: (
-            <AuthProvider>
-                <App />
-            </AuthProvider>
-        ),
+        element: <App />,
         errorElement: <RootErrorBoundary />,
         children: [
             {
@@ -49,7 +45,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <ChakraProvider theme={myTheme}>
-            <RouterProvider router={router} />
+            <AuthProvider>
+                <RouterProvider router={router} />
+            </AuthProvider>
         </ChakraProvider>
     </React.StrictMode>
 );

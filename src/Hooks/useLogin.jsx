@@ -10,13 +10,15 @@ export default function useLogin() {
         const { username, password } = loginData;
         if (!username) {
             return dispatch({
-                type: "LOGIN_ERROR",
+                type: "LOGIN",
+                accessToken: undefined,
                 error: { type: "username", message: "Enter a valid username" },
             });
         }
         if (!password) {
             return dispatch({
-                type: "LOGIN_ERROR",
+                type: "LOGIN",
+                accessToken: undefined,
                 error: { type: "password", message: "Enter a valid password" },
             });
         }
@@ -28,7 +30,8 @@ export default function useLogin() {
             .then((resp) => {
                 dispatch({
                     type: "LOGIN",
-                    token: resp.data.accessToken,
+                    accessToken: resp.data.accessToken,
+                    error: {},
                 });
                 return redirect("/"); // WARNING: Didn't redirect
             })
@@ -36,12 +39,14 @@ export default function useLogin() {
                 if (err.response) {
                     const { message } = err.response.data;
                     return dispatch({
-                        type: "LOGIN_ERROR",
+                        type: "LOGIN",
+                        accessToken: undefined,
                         error: { type: "api", message },
                     });
                 }
                 return dispatch({
-                    type: "LOGIN_ERROR",
+                    type: "LOGIN",
+                    accessToken: undefined,
                     error: {
                         type: "api",
                         message: "It seems that the server is down",
