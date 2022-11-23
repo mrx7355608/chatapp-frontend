@@ -1,9 +1,10 @@
 /* eslint-disable */
 import React from "react";
 import MySpinner from "../Components/Custom/MySpinner";
+import authReducer from "../Actions/Reducers/authReducer";
 
 const AuthContext = React.createContext(null);
-
+// Hook for using AuthContext
 const useAuth = () => React.useContext(AuthContext);
 
 function AuthProvider({ children }) {
@@ -13,41 +14,8 @@ function AuthProvider({ children }) {
         error: {},
         isPending: false,
     };
-    const reducer = (state, action) => {
-        switch (action.type) {
-            case "MAKE_REQUEST":
-                return { ...state, isPending: true };
+    const [state, dispatch] = React.useReducer(authReducer, initialState);
 
-            case "LOGIN":
-                return {
-                    ...state,
-                    isPending: false,
-                    accessToken: action.token,
-                    error: action.error,
-                };
-
-            case "REFRESH_TOKEN":
-                return {
-                    ...state,
-                    accessToken: action.token,
-                    error: action.error,
-                };
-
-            case "FETCHED_USER":
-                return {
-                    ...state,
-                    user: action.user,
-                };
-
-            case "LOGOUT":
-                return {
-                    ...state,
-                    user: {},
-                    accessToken: undefined,
-                };
-        }
-    };
-    const [state, dispatch] = React.useReducer(reducer, initialState);
     return (
         <AuthContext.Provider value={{ state, dispatch }}>
             {children}
