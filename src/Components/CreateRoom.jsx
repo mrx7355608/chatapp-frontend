@@ -12,21 +12,54 @@ import {
     FormLabel,
     FormControl,
     Input,
+    Text,
+    useToast,
+    Spinner,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useAuth } from "../Contexts/AuthContext";
 
 export default function CreateRoom() {
+    const { state } = useAuth();
+    const toast = useToast();
+    const [loading, setLoading] = React.useState(null);
+    const [error, setError] = React.useState(null);
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [formdata, setFormData] = React.useState({
         roomName: "",
         roomPassword: "",
     });
-    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    // On Change handler
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formdata, [name]: value });
     };
 
+    // On Submit handler
     const handleSubmit = () => {
-        console.log(formdata);
+        setLoading(true);
+        const url = `${import.meta.env.VITE_API_URL}/rooms/create`;
+        axios
+            .post(url, formdata, {
+                headers: { authorization: `Bearer ${state.accessToken}` },
+            })
+            .then((resp) => {
+                setLoading(false);
+                toast({
+                    title: "Room has been created",
+                    description: `RoomID: ${resp.data.data.roomid}`,
+                    status: "success",
+                    isClosable: true,
+                });
+            })
+            .catch((err) => {
+                setLoading(false);
+                if (err.response) {
+                    return setError(err.response.data.data);
+                }
+                return setError("Something went wrong!");
+            });
     };
     return (
         <>
@@ -46,6 +79,7 @@ export default function CreateRoom() {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <FormControl>
+                            <Text>{error}</Text>
                             <FormLabel>Room name</FormLabel>
                             <Input
                                 onChange={(e) => handleChange(e)}
@@ -67,9 +101,21 @@ export default function CreateRoom() {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button onClick={handleSubmit} colorScheme="red" mr={3}>
-                            Create
-                        </Button>
+                        {loading ? (
+                            <Button disabled colorScheme="red" mr={3}>
+                                <Spinner size="sm" mr="2" />
+                                Creating ...
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={handleSubmit}
+                                colorScheme="red"
+                                mr={3}
+                            >
+                                Create
+                            </Button>
+                        )}
+
                         <Button onClick={onClose}>Cancel</Button>
                     </ModalFooter>
                 </ModalContent>

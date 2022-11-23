@@ -1,8 +1,12 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function useSignup() {
+    const navigateTo = useNavigate();
+
     const signup = (e, signupData, setLoading, setError) => {
         e.preventDefault();
+        // eslint-disable-next-line operator-linebreak
         const { fname, lname, username, password, confirmPassword } =
             signupData;
         if (!fname) {
@@ -45,7 +49,8 @@ export default function useSignup() {
         const url = `${import.meta.env.VITE_API_URL}/auth/signup`;
         axios
             .post(url, signupData)
-            .then((resp) => console.log(resp))
+            .then(() => navigateTo("/login"))
+            // eslint-disable-next-line consistent-return
             .catch((err) => {
                 setLoading(false);
                 if (err.response) {
