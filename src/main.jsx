@@ -10,6 +10,8 @@ import { AuthProvider } from "./Contexts/AuthContext";
 import myTheme from "./theme";
 // Pages
 import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
+import GuestRoutes from "./Components/GuestRoute";
+import ProtectedRoutes from "./Components/ProtectedRoutes";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -28,11 +30,19 @@ const router = createBrowserRouter([
             },
             {
                 path: "/login",
-                element: <Login />,
+                element: (
+                    // <GuestRoutes>
+                    <Login />
+                    /* </GuestRoutes> */
+                ),
             },
             {
                 path: "/signup",
-                element: <Signup />,
+                element: (
+                    // <GuestRoutes>
+                    <Signup />
+                    // </GuestRoutes>
+                ),
             },
             {
                 path: "/room",

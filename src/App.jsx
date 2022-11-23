@@ -4,13 +4,14 @@ import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 // Contexts
-import { AuthProvider, useAuth } from "./Contexts/AuthContext";
+import { useAuth } from "./Contexts/AuthContext";
 // Components
 import Navbar from "./Components/Navbar";
 import MySpinner from "./Components/Custom/MySpinner";
 import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
 
 function App() {
+    const [loading, setLoading] = React.useState(true);
     const { state, dispatch } = useAuth();
 
     // Refresh token
@@ -20,33 +21,34 @@ function App() {
             .post(url, null, { withCredentials: true })
             .then((resp) => {
                 dispatch({
-                    type: "REFRESH_TOKEN",
+                    type: "REFRESHED_TOKEN",
                     token: resp.data.accessToken || undefined,
                     error: {},
                 });
             })
-            .catch((err) => null);
+            .catch(() => null);
     }, []);
 
     // Fetch user data
+    // eslint-disable-next-line consistent-return
     React.useEffect(() => {
-        if (!state.accessToken) return;
-        console.log("Fetching user...");
+        if (!state.accessToken) return setLoading(false);
         const url = `${import.meta.env.VITE_API_URL}/user`;
         axios
             .get(url, {
                 headers: { authorization: `Bearer ${state.accessToken}` },
             })
             .then((resp) => {
+                setLoading(false);
                 dispatch({
                     type: "FETCHED_USER",
                     user: resp.data.data,
                 });
             })
-            .catch((err) => null);
+            .catch(() => null);
     }, [state.accessToken]);
 
-    console.log(state);
+    if (loading) return <MySpinner />;
 
     return (
         <>

@@ -1,7 +1,8 @@
 import React from "react";
-import { Input, Text, useColorMode, Spinner, Button } from "@chakra-ui/react";
+import { Input, Text, useColorMode, Button } from "@chakra-ui/react";
 import { useAuth } from "../Contexts/AuthContext";
 import useLogin from "../Hooks/useLogin";
+import LoadingFormButton from "./Custom/LoadingFormButton";
 
 export default function LoginForm() {
     const [loginData, setLoginData] = React.useState({
@@ -66,18 +67,7 @@ export default function LoginForm() {
                 {error.type === "password" && error.message}
             </Text>
             {state.isPending ? (
-                <Button
-                    mt="8"
-                    disabled
-                    size="md"
-                    w="full"
-                    color="white"
-                    type="button"
-                    bgColor="#F3664C"
-                >
-                    <Spinner mr="2" size="sm" />
-                    <Text pt="1">Logging in...</Text>
-                </Button>
+                <LoadingFormButton btnText="Logging in ..." />
             ) : (
                 <Button
                     mt="8"
