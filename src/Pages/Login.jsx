@@ -1,12 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { Container, Flex, Heading, useColorMode, Text } from "@chakra-ui/react";
-import { Link, useNavigation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "../Components/LoginForm";
 import { useAuth } from "../Contexts/AuthContext";
 
 export default function Signup() {
+    const navigateTo = useNavigate();
     const { colorMode } = useColorMode();
+    const { state } = useAuth();
+
+    // if user is already logged in, navigate to the homepage
+    React.useEffect(() => {
+        if (state.accessToken) {
+            navigateTo("/");
+        }
+    }, []);
 
     return (
         <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">

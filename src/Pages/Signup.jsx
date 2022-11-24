@@ -2,11 +2,21 @@
 /* eslint-disable object-curly-newline */
 import React from "react";
 import { Container, Flex, Heading, useColorMode, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SignupForm from "../Components/SignupForm";
+import { useAuth } from "../Contexts/AuthContext";
 
 export default function Signup() {
+    const navigateTo = useNavigate();
+    const { state } = useAuth();
     const { colorMode } = useColorMode();
+
+    // if user is already logged in, navigate to the homepage
+    React.useEffect(() => {
+        if (state.accessToken) {
+            navigateTo("/");
+        }
+    }, []);
 
     return (
         <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
