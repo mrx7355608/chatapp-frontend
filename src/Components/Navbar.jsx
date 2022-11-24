@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaRocketchat } from "react-icons/fa";
@@ -58,20 +59,6 @@ export default function Navbar() {
                 </Link>
                 {Object.keys(state.user).length ? (
                     <>
-                        <Link to="/room">
-                            <Text
-                                color={
-                                    colorMode === "light" ? "gray.700" : "white"
-                                }
-                                as="b"
-                                fontSize="xs"
-                                _hover={{
-                                    color: "#F3664C",
-                                }}
-                            >
-                                ROOM
-                            </Text>
-                        </Link>
                         <Flex alignItems="center" gap="2">
                             <Image
                                 display="inline"
