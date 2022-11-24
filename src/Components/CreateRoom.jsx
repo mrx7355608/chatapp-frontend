@@ -56,7 +56,7 @@ export default function CreateRoom() {
             .catch((err) => {
                 setLoading(false);
                 if (err.response) {
-                    return setError(err.response.data.data);
+                    return setError(err.response.data.message);
                 }
                 return setError("Something went wrong!");
             });
