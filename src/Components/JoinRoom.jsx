@@ -13,22 +13,24 @@ import {
     FormControl,
     Input,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function JoinRoom() {
+    const navigateTo = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [roomid, setRoomId] = React.useState(null);
 
-    const initialRef = React.useRef(null);
+    const handleJoinRoom = () => {
+        if (!roomid) return null;
+        return navigateTo(`/room/${roomid}`);
+    };
 
     return (
         <>
             <Button pt="0.5" color="white" bgColor="#F3664C" onClick={onOpen}>
                 Join Room
             </Button>
-            <Modal
-                initialFocusRef={initialRef}
-                isOpen={isOpen}
-                onClose={onClose}
-            >
+            <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Join Room</ModalHeader>
@@ -36,17 +38,19 @@ export default function JoinRoom() {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Room ID</FormLabel>
-                            <Input ref={initialRef} placeholder="Room ID" />
-                        </FormControl>
-
-                        <FormControl mt={4}>
-                            <FormLabel>Password</FormLabel>
-                            <Input placeholder="Password" />
+                            <Input
+                                onChange={(e) => setRoomId(e.target.value)}
+                                placeholder="Room ID"
+                            />
                         </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="red" mr={3}>
+                        <Button
+                            onClick={handleJoinRoom}
+                            colorScheme="red"
+                            mr={3}
+                        >
                             Join
                         </Button>
                         <Button onClick={onClose}>Cancel</Button>
