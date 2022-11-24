@@ -37,7 +37,7 @@ const router = createBrowserRouter([
                 element: <Signup />,
             },
             {
-                path: "/room",
+                path: "/room/:roomid",
                 element: <Room />,
             },
         ],
