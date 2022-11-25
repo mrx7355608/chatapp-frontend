@@ -1,44 +1,41 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+    Box,
+    Spinner,
+    Text,
     Heading,
     Flex,
-    Box,
-    useColorMode,
     Input,
     Button,
+    useColorMode,
 } from "@chakra-ui/react";
+import { joinRoom } from "../Services/roomServices";
 import RoomHeader from "../Components/RoomHeader";
 import MessagesContainer from "../Components/MessagesContainer";
 import SendMessage from "../Components/SendMessage";
 import { useAuth } from "../Contexts/AuthContext";
-import useRoom from "../Hooks/useRoom";
+import { useRoom } from "../Contexts/RoomContext";
 
 export default function Room() {
-    const [roomPassword, setRoomPassword] = React.useState(null);
-    const [askPassword, setAskPassword] = React.useState(true);
+    const { roomData, setRoomData } = useRoom();
+    const d = useRoom();
+    const navigateTo = useNavigate();
     const { colorMode } = useColorMode();
     const { state } = useAuth();
-    const navigateTo = useNavigate();
-    const getRoomData = useRoom();
     const { roomid } = useParams();
+    const [askPassword, setAskPassword] = React.useState(true);
+    const [roomPassword, setRoomPassword] = React.useState(null);
 
-    // If user is not logged in, navigate to homepagej
     React.useEffect(() => {
-        if (!state.accessToken) navigateTo("/");
-    }, []);
-
-    // Fetch room data
-    React.useEffect(() => {
+        // Hit api to join room
         if (!askPassword && roomPassword) {
-            getRoomData(roomid, roomPassword);
-        }
-    }, [askPassword, roomPassword]);
-
-    // Establish a socket connection
-    React.useEffect(() => {
-        if (!askPassword && roomPassword) {
-            console.log("Connecting to socket server");
+            joinRoom(roomid, roomPassword, state.accessToken)
+                .then((room) => {
+                    console.log(room);
+                    setRoomData({ ...roomData, loading: false, room });
+                })
+                .catch((err) => console.log(err.message));
         }
     }, [askPassword, roomPassword]);
 
@@ -54,6 +51,15 @@ export default function Room() {
                 <Button onClick={() => setAskPassword(false)}>Join</Button>
                 <Button onClick={() => navigateTo("/")}>Cancel</Button>
             </Flex>
+        );
+    }
+
+    if (roomData.loading) {
+        return (
+            <Box>
+                <Spinner mb="3" />
+                <Text>Joining room</Text>
+            </Box>
         );
     }
 

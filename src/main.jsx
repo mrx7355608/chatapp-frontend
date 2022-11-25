@@ -10,8 +10,9 @@ import { AuthProvider } from "./Contexts/AuthContext";
 import myTheme from "./theme";
 // Pages
 import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
-import GuestRoutes from "./Components/GuestRoute";
-import ProtectedRoutes from "./Components/ProtectedRoutes";
+// import GuestRoutes from "./Components/GuestRoute";
+// import ProtectedRoutes from "./Components/ProtectedRoutes";
+import RoomProvider from "./Contexts/RoomContext";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/room/:roomid",
-                element: <Room />,
+                element: (
+                    <RoomProvider>
+                        <Room />
+                    </RoomProvider>
+                ),
             },
         ],
     },
