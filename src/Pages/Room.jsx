@@ -16,41 +16,37 @@ import MessagesContainer from "../Components/MessagesContainer";
 import SendMessage from "../Components/SendMessage";
 import { useAuth } from "../Contexts/AuthContext";
 import { useRoom } from "../Contexts/RoomContext";
+import RoomError from "../Components/Errors/RoomError";
+import AskRoomPassword from "../Components/AskRoomPassword";
 
 export default function Room() {
-    const { roomData, setRoomData } = useRoom();
-    const d = useRoom();
-    const navigateTo = useNavigate();
-    const { colorMode } = useColorMode();
     const { state } = useAuth();
     const { roomid } = useParams();
-    const [askPassword, setAskPassword] = React.useState(true);
+    const { colorMode } = useColorMode();
+    const { roomData, dispatch } = useRoom();
     const [roomPassword, setRoomPassword] = React.useState(null);
+    const navigateTo = useNavigate();
 
     React.useEffect(() => {
         // Hit api to join room
-        if (!askPassword && roomPassword) {
+        if (!roomData.askPassword && roomPassword) {
             joinRoom(roomid, roomPassword, state.accessToken)
                 .then((room) => {
-                    console.log(room);
-                    setRoomData({ ...roomData, loading: false, room });
+                    dispatch({ type: "ROOM_FETCHED", room });
                 })
-                .catch((err) => console.log(err.message));
+                .catch((error) => {
+                    dispatch({ type: "ERROR", error });
+                });
         }
-    }, [askPassword, roomPassword]);
+    }, [roomData.askPassword]);
 
     // Ask for room password
-    if (askPassword) {
+    if (roomData.askPassword) {
         return (
-            <Flex>
-                <Heading>Join Room</Heading>
-                <Input
-                    placeholder="Room password"
-                    onChange={(e) => setRoomPassword(e.target.value)}
-                />
-                <Button onClick={() => setAskPassword(false)}>Join</Button>
-                <Button onClick={() => navigateTo("/")}>Cancel</Button>
-            </Flex>
+            <AskRoomPassword
+                setRoomPassword={setRoomPassword}
+                navigateTo={navigateTo}
+            />
         );
     }
 
@@ -61,6 +57,10 @@ export default function Room() {
                 <Text>Joining room</Text>
             </Box>
         );
+    }
+
+    if (roomData.error) {
+        return <RoomError error={roomData.error} />;
     }
 
     return (

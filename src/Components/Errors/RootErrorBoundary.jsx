@@ -8,7 +8,7 @@ export default function RootErrorBoundary() {
 
     return (
         <>
-            <Heading>WhoOps!</Heading>
+            <Heading>WhoOps!1</Heading>
             <Text>{error.message}</Text>
         </>
     );

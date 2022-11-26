@@ -2,7 +2,6 @@ import axios from "axios";
 
 const joinRoom = async (roomid, roomPassword, accessToken) => {
     try {
-        console.log({ roomid, roomPassword, accessToken });
         const url = `${import.meta.env.VITE_API_URL}/rooms/join`;
         const resp = await axios.post(
             url,
