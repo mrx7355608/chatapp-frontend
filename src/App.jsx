@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React from "react";
-import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 // Contexts
@@ -9,43 +8,57 @@ import { useAuth } from "./Contexts/AuthContext";
 import Navbar from "./Components/Navbar";
 import MySpinner from "./Components/Custom/MySpinner";
 import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
+import authServices from "./Services/authServices";
+import userServices from "./Services/userServices";
 
 function App() {
-    const [loading, setLoading] = React.useState(true);
     const { state, dispatch } = useAuth();
+    const [loading, setLoading] = React.useState(true);
 
     // Refresh token
     React.useEffect(() => {
-        const url = `${import.meta.env.VITE_API_URL}/auth/refresh-token`;
-        axios
-            .post(url, null, { withCredentials: true })
-            .then((resp) => {
+        // eslint-disable-next-line
+        (async function () {
+            try {
+                // Fetch new access token
+                const response = await authServices.refreshToken();
+                // If access token is not sent by the server then return;
+                // It means that the user is not logged in
+                // or the refresh token is  not present or invalid
+                if (!response.data.accessToken) return setLoading(false);
+                // Update auth state
                 dispatch({
                     type: "REFRESHED_TOKEN",
-                    token: resp.data.accessToken || undefined,
+                    token: response.data.accessToken || undefined,
                     error: {},
                 });
-            })
-            .catch(() => null);
+            } catch (err) {
+                setLoading(false);
+            }
+        })();
     }, []);
 
     // Fetch user data
     // eslint-disable-next-line consistent-return
     React.useEffect(() => {
-        if (!state.accessToken) return setLoading(false);
-        const url = `${import.meta.env.VITE_API_URL}/user`;
-        axios
-            .get(url, {
-                headers: { authorization: `Bearer ${state.accessToken}` },
-            })
-            .then((resp) => {
-                setLoading(false);
+        if (!state.accessToken) return;
+        // eslint-disable-next-line
+        (async function () {
+            try {
+                // Fetch user data
+                const response = await userServices.fetchUser(
+                    state.accessToken
+                );
+                // Update state
                 dispatch({
                     type: "FETCHED_USER",
-                    user: resp.data.data,
+                    user: response.data.data,
                 });
-            })
-            .catch(() => null);
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+            }
+        })();
     }, [state.accessToken]);
 
     if (loading) return <MySpinner />;
