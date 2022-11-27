@@ -13,6 +13,7 @@ import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
 // import GuestRoutes from "./Components/GuestRoute";
 // import ProtectedRoutes from "./Components/ProtectedRoutes";
 import RoomProvider from "./Contexts/RoomContext";
+import SocketProvider from "./Contexts/SocketContext";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -41,7 +42,9 @@ const router = createBrowserRouter([
                 path: "/room/:roomid",
                 element: (
                     <RoomProvider>
-                        <Room />
+                        <SocketProvider>
+                            <Room />
+                        </SocketProvider>
                     </RoomProvider>
                 ),
             },

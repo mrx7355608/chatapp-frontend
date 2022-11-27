@@ -1,4 +1,5 @@
 import axios from "axios";
+import { io } from "socket.io-client";
 
 const joinRoom = async (roomid, roomPassword, accessToken) => {
     try {
@@ -20,5 +21,10 @@ const joinRoom = async (roomid, roomPassword, accessToken) => {
 };
 const getRoomData = () => {};
 const createRoom = () => {};
+const socketConnection = () => {
+    const apiurl = import.meta.env.VITE_API_URL;
+    const socket = io(apiurl, { autoConnect: false });
+    return socket;
+};
 
-export { joinRoom, getRoomData, createRoom };
+export { joinRoom, getRoomData, createRoom, socketConnection };

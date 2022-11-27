@@ -11,6 +11,8 @@ export default function AskRoomPassword({ setRoomPassword, navigateTo }) {
             <Heading>Join Room</Heading>
             <Input
                 placeholder="Room password"
+                type="text"
+                name="room-password"
                 onChange={(e) => setRoomPassword(e.target.value)}
             />
             <Button onClick={() => dispatch({ type: "ASK_PASSWORD" })}>
