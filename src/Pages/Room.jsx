@@ -1,6 +1,14 @@
+/* eslint-disable consistent-return */
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Spinner, Text, Flex, useColorMode } from "@chakra-ui/react";
+import {
+    Box,
+    Spinner,
+    Text,
+    Flex,
+    useColorMode,
+    useToast,
+} from "@chakra-ui/react";
 import { joinRoom, socketConnection } from "../Services/roomServices";
 import RoomHeader from "../Components/RoomHeader";
 import MessagesContainer from "../Components/MessagesContainer";
@@ -10,6 +18,7 @@ import { useRoom } from "../Contexts/RoomContext";
 import RoomError from "../Components/Errors/RoomError";
 import AskRoomPassword from "../Components/AskRoomPassword";
 import SocketProvider, { useSocket } from "../Contexts/SocketContext";
+import socketHandler from "../Actions/socketHandler";
 
 export default function Room() {
     const { state } = useAuth();
@@ -18,7 +27,9 @@ export default function Room() {
     const { roomData, dispatch } = useRoom();
     const [roomPassword, setRoomPassword] = React.useState(null);
     const navigateTo = useNavigate();
+    const toast = useToast();
     const { socket, setSocket } = useSocket();
+    const [messages, setMessages] = React.useState([]);
 
     // Hit api to join room
     React.useEffect(() => {
@@ -26,10 +37,9 @@ export default function Room() {
             joinRoom(roomid, roomPassword, state.accessToken)
                 .then((room) => {
                     dispatch({ type: "ROOM_FETCHED", room });
-
                     // Establish a socket connection
-                    const socket = socketConnection();
-                    setSocket(socket);
+                    const sock = socketConnection();
+                    setSocket(sock);
                 })
                 .catch((error) => {
                     dispatch({ type: "ERROR", error });
@@ -40,8 +50,13 @@ export default function Room() {
     // Emitting socket events
     React.useEffect(() => {
         if (!socket) return;
-        socket.auth = { token: state.accessToken, roomid };
-        socket.connect();
+        socketHandler(socket, state.accessToken, roomid, toast);
+        return () => {
+            socket.off("room:user-left");
+            socket.off("room:new-user-joined");
+            socket.off("room:join");
+            socket.off("connect_error");
+        };
     }, [socket]);
 
     // Ask for room password
@@ -78,8 +93,11 @@ export default function Room() {
                 rounded="lg"
             >
                 <RoomHeader />
-                <MessagesContainer />
-                <SendMessage />
+                <MessagesContainer
+                    messages={messages}
+                    setMessages={setMessages}
+                />
+                <SendMessage setMessages={setMessages} />
             </Box>
         </Flex>
     );
