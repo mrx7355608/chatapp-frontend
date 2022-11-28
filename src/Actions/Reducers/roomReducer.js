@@ -21,6 +21,10 @@ const roomReducer = (state, action) => {
                 loading: true,
             };
 
+        case "NEW_USER":
+            // eslint-disable-next-line no-case-declarations
+            const newUsers = state.room.users.push(action.user);
+            return { ...state, room: { ...state.room, users: newUsers } };
         default:
             return state;
     }
