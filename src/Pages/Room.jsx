@@ -17,7 +17,7 @@ import { useAuth } from "../Contexts/AuthContext";
 import { useRoom } from "../Contexts/RoomContext";
 import RoomError from "../Components/Errors/RoomError";
 import AskRoomPassword from "../Components/AskRoomPassword";
-import SocketProvider, { useSocket } from "../Contexts/SocketContext";
+import { useSocket } from "../Contexts/SocketContext";
 import socketHandler from "../Actions/socketHandler";
 
 export default function Room() {

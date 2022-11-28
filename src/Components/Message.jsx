@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Image, Box, Text, Flex } from "@chakra-ui/react";
 

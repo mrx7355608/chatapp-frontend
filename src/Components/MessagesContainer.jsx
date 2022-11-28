@@ -39,6 +39,7 @@ export default function MessagesContainer({ messages, setMessages }) {
 
     React.useEffect(() => {
         if (msgContainerRef.current) {
+            // eslint-disable-next-line operator-linebreak
             msgContainerRef.current.scrollTop =
                 msgContainerRef.current.scrollHeight;
         }
