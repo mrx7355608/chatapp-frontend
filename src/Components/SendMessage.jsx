@@ -2,16 +2,26 @@ import React from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
 import { BsEmojiWink } from "react-icons/bs";
 import { useSocket } from "../Contexts/SocketContext";
+import { useAuth } from "../Contexts/AuthContext";
 
-export default function SendMessage() {
+export default function SendMessage({ setMessages }) {
     const msgRef = React.useRef(null);
+    const { state } = useAuth();
     const { socket } = useSocket();
 
     // Send message handler
     const sendMessage = () => {
         const message = msgRef.current.value;
-        console.log(message);
         socket.emit("room:new-message", message);
+        // Update messages array
+        const myMessage = {
+            sender: {
+                username: state.user.username,
+                photo: state.user.photo,
+            },
+            message,
+        };
+        setMessages((prev) => [...prev, myMessage]);
         msgRef.current.value = "";
     };
 
