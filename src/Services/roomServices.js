@@ -19,12 +19,17 @@ const joinRoom = async (roomid, roomPassword, accessToken) => {
         throw new Error("It seems that the server is down");
     }
 };
-const getRoomData = () => {};
-const createRoom = () => {};
 const socketConnection = () => {
     const apiurl = import.meta.env.VITE_API_URL;
     const socket = io(apiurl, { autoConnect: false });
     return socket;
 };
+const getRoomMessages = async (roomid, accessToken) => {
+    const url = `${import.meta.env.VITE_API_URL}/rooms/${roomid}/messages`;
+    const response = await axios.get(url, {
+        headers: { authorization: `Bearer ${accessToken}` },
+    });
+    return response;
+};
 
-export { joinRoom, getRoomData, createRoom, socketConnection };
+export { joinRoom, socketConnection, getRoomMessages };

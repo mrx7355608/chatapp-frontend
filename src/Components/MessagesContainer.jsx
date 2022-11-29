@@ -1,31 +1,28 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import Message from "./Message";
 import { useAuth } from "../Contexts/AuthContext";
 import { useSocket } from "../Contexts/SocketContext";
+import { getRoomMessages } from "../Services/roomServices";
 
 export default function MessagesContainer({ messages, setMessages }) {
-    const [loading, setLoading] = React.useState(true);
     const { roomid } = useParams();
     const { socket } = useSocket();
     const { state } = useAuth();
     const msgContainerRef = React.useRef();
+    const [loading, setLoading] = React.useState(true);
 
+    // Fetch messages
     React.useEffect(() => {
-        // Fetch messages
-        const url = `${import.meta.env.VITE_API_URL}/rooms/${roomid}/messages`;
-        axios
-            .get(url, {
-                headers: { authorization: `Bearer ${state.accessToken}` },
-            })
+        getRoomMessages(roomid, state.accessToken)
             .then((resp) => {
                 setLoading(false);
                 setMessages([...messages, ...resp.data.data]);
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => console.log({ fetchMessagesErr: err.message }));
 
         // Listen for incoming messages
         socket.on("room:new-message-received", (data) => {
@@ -37,15 +34,13 @@ export default function MessagesContainer({ messages, setMessages }) {
         };
     }, []);
 
+    // Auto Scroll the messages container to bottom
     React.useEffect(() => {
-        if (msgContainerRef.current) {
-            // eslint-disable-next-line operator-linebreak
-            msgContainerRef.current.scrollTop =
-                msgContainerRef.current.scrollHeight;
+        const container = msgContainerRef.current;
+        if (container) {
+            container.scrollTop = container.scrollHeight;
         }
     }, [messages]);
-
-    if (loading) return <Spinner />;
 
     return (
         <Flex
@@ -57,9 +52,13 @@ export default function MessagesContainer({ messages, setMessages }) {
             scrollBehavior="smooth"
             ref={msgContainerRef}
         >
-            {messages.map((message) => (
-                <Message messageObj={message} />
-            ))}
+            {loading ? (
+                <Spinner />
+            ) : (
+                messages.map((message) => (
+                    <Message key={message._id} messageObj={message} />
+                ))
+            )}
         </Flex>
     );
 }
