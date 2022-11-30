@@ -17,7 +17,7 @@ import {
     Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../../Contexts/AuthContext";
 
 export default function CreateRoom() {
     const { state } = useAuth();

@@ -50,7 +50,6 @@ export default function useSignup() {
         axios
             .post(url, signupData)
             .then(() => navigateTo("/login"))
-            // eslint-disable-next-line consistent-return
             .catch((err) => {
                 setLoading(false);
                 if (err.response) {

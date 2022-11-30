@@ -1,15 +1,14 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 // Contexts
 import { useAuth } from "./Contexts/AuthContext";
 // Components
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/Main/Navbar";
 import MySpinner from "./Components/Custom/MySpinner";
-import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
 import authServices from "./Services/authServices";
 import userServices from "./Services/userServices";
+import OutletErrorBoundary from "./Components/Errors/OutletErrorBoundary";
 
 function App() {
     const { state, dispatch } = useAuth();
@@ -39,7 +38,6 @@ function App() {
     }, []);
 
     // Fetch user data
-    // eslint-disable-next-line consistent-return
     React.useEffect(() => {
         if (!state.accessToken) return;
         // eslint-disable-next-line

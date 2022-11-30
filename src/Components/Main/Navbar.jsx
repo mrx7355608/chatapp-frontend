@@ -11,9 +11,9 @@ import {
     Heading,
     Text,
 } from "@chakra-ui/react";
-import useLogout from "../Hooks/useLogout";
-import { useAuth } from "../Contexts/AuthContext";
-import DarkModeToggle from "./Custom/DarkModeToggle";
+import useLogout from "../../Hooks/useLogout";
+import { useAuth } from "../../Contexts/AuthContext";
+import DarkModeToggle from "../Custom/DarkModeToggle";
 
 export default function Navbar() {
     const { state } = useAuth();

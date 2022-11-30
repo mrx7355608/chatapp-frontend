@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import { Image, Box, Text, Flex } from "@chakra-ui/react";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 export default function Message({ messageObj }) {
     const { message, sender } = messageObj;
@@ -26,11 +25,11 @@ export default function Message({ messageObj }) {
             <Box
                 mx="3"
                 my="2"
-                bgColor="red.400"
+                bgColor="red.500"
                 px="3"
-                py="2"
-                pt="3"
-                rounded="lg"
+                py="1.5"
+                pt="2"
+                rounded="full"
             >
                 <Text color="white" as="b">
                     {message}

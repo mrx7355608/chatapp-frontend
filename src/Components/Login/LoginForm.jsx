@@ -1,8 +1,8 @@
 import React from "react";
 import { Input, Text, useColorMode, Button } from "@chakra-ui/react";
-import { useAuth } from "../Contexts/AuthContext";
-import useLogin from "../Hooks/useLogin";
-import LoadingFormButton from "./Custom/LoadingFormButton";
+import { useAuth } from "../../Contexts/AuthContext";
+import useLogin from "../../Hooks/useLogin";
+import LoadingFormButton from "../Custom/LoadingFormButton";
 
 export default function LoginForm() {
     const [loginData, setLoginData] = React.useState({

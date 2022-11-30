@@ -1,12 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
 import React from "react";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import Message from "./Message";
-import { useAuth } from "../Contexts/AuthContext";
-import { useSocket } from "../Contexts/SocketContext";
-import { getRoomMessages } from "../Services/roomServices";
+import { useAuth } from "../../../Contexts/AuthContext";
+import { useSocket } from "../../../Contexts/SocketContext";
+import { getRoomMessages } from "../../../Services/roomServices";
 
 export default function MessagesContainer({ messages, setMessages }) {
     const { roomid } = useParams();

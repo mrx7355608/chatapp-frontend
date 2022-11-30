@@ -6,7 +6,6 @@ export default function useLogin() {
     const { dispatch } = useAuth();
     const navigateTo = useNavigate();
 
-    // eslint-disable-next-line consistent-return
     const login = (loginData) => {
         // Shows loading state
         dispatch({ type: "MAKE_REQUEST" });

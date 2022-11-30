@@ -1,9 +1,8 @@
-// eslint-disable-next-line object-curly-newline
 import { Flex, Box, Heading } from "@chakra-ui/react";
 import React from "react";
 // Components
-import CreateRoom from "../Components/CreateRoom";
-import JoinRoom from "../Components/JoinRoom";
+import CreateRoom from "../Components/Home/CreateRoom";
+import JoinRoom from "../Components/Home/JoinRoom";
 
 export default function Home() {
     return (

@@ -2,7 +2,7 @@
 import React from "react";
 import { Container, Flex, Heading, useColorMode, Text } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import LoginForm from "../Components/LoginForm";
+import LoginForm from "../Components/Login/LoginForm";
 import { useAuth } from "../Contexts/AuthContext";
 
 export default function Signup() {

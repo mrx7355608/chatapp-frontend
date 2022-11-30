@@ -1,8 +1,8 @@
 import React from "react";
 import { Flex, Heading, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useRoom } from "../Contexts/RoomContext";
-import { useSocket } from "../Contexts/SocketContext";
+import { useRoom } from "../../Contexts/RoomContext";
+import { useSocket } from "../../Contexts/SocketContext";
 
 export default function RoomHeader() {
     const navigateTo = useNavigate();

@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-/* eslint-disable react/prop-types */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import roomReducer from "../Actions/Reducers/roomReducer";

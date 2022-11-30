@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Input, useColorMode } from "@chakra-ui/react";
-import LoadingFormButton from "./Custom/LoadingFormButton";
-import useSignup from "../Hooks/useSignup";
+import LoadingFormButton from "../Custom/LoadingFormButton";
+import useSignup from "../../Hooks/useSignup";
 
 export default function SignupForm() {
     const { colorMode } = useColorMode();

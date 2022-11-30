@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import { Spinner, Text, Button } from "@chakra-ui/react";
 

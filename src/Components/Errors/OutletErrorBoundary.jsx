@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Text, Heading } from "@chakra-ui/react";
 import React from "react";
 
