@@ -31,5 +31,12 @@ const getRoomMessages = async (roomid, accessToken) => {
     });
     return response;
 };
+const getRoomUsers = async (roomid, accessToken) => {
+    const url = `${import.meta.env.VITE_API_URL}/rooms/${roomid}/users`;
+    const response = await axios.get(url, {
+        headers: { authorization: `Bearer ${accessToken}` },
+    });
+    return response;
+};
 
-export { joinRoom, socketConnection, getRoomMessages };
+export { joinRoom, socketConnection, getRoomMessages, getRoomUsers };
