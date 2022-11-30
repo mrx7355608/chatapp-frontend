@@ -17,5 +17,9 @@ module.exports = {
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
         "object-curly-newline": "off",
+        "consistent-return": "off",
+        "react/prop-types": "off",
+        "react/jsx-no-constructed-context-values": "off",
+        "no-underscore-dangle": "off",
     },
 };
