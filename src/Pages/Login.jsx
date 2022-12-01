@@ -1,21 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { Container, Flex, Heading, useColorMode, Text } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoginForm from "../Components/Login/LoginForm";
-import { useAuth } from "../Contexts/AuthContext";
+import useIsLoggedIn from "../Hooks/useIsLoggedIn";
 
 export default function Signup() {
-    const navigateTo = useNavigate();
+    useIsLoggedIn(); // if user is already logged in, navigate to the homepage
     const { colorMode } = useColorMode();
-    const { state } = useAuth();
-
-    // if user is already logged in, navigate to the homepage
-    React.useEffect(() => {
-        if (state.accessToken) {
-            navigateTo("/");
-        }
-    }, []);
 
     return (
         <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
@@ -29,6 +21,7 @@ export default function Signup() {
                 <Heading textAlign="center" mt="6" mb="8">
                     Login
                 </Heading>
+                {/* LOGIN FORM */}
                 <LoginForm />
                 <Text
                     textAlign="center"
