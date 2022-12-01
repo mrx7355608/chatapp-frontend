@@ -1,63 +1,32 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-    Box,
-    Spinner,
-    Text,
-    Flex,
-    useColorMode,
-    useToast,
-} from "@chakra-ui/react";
-import { joinRoom, socketConnection } from "../Services/roomServices";
+import { useNavigate } from "react-router-dom";
+import { Box, Spinner, Text, Flex, useColorMode } from "@chakra-ui/react";
+// Contexts
+import { useRoom } from "../Contexts/RoomContext";
+// Components
+import RoomError from "../Components/Errors/RoomError";
+import AskRoomPassword from "../Components/Room/AskRoomPassword";
 import RoomHeader from "../Components/Room/RoomHeader";
 import MessagesContainer from "../Components/Room/Messages/MessagesContainer";
 import SendMessage from "../Components/Room/Messages/SendMessage";
-import { useAuth } from "../Contexts/AuthContext";
-import { useRoom } from "../Contexts/RoomContext";
-import RoomError from "../Components/Errors/RoomError";
-import AskRoomPassword from "../Components/Room/AskRoomPassword";
-import { useSocket } from "../Contexts/SocketContext";
-import socketHandler from "../Actions/socketHandler";
 import UsersContainer from "../Components/Room/Users/UsersContainer";
+// Hooks
+import useSocketHandler from "../Hooks/useSocketHandler";
+import useJoinRoom from "../Hooks/useJoinRoom";
 
 export default function Room() {
-    const { state } = useAuth();
-    const { roomid } = useParams();
     const { colorMode } = useColorMode();
-    const { roomData, dispatch } = useRoom();
+    const { roomData } = useRoom();
     const [roomPassword, setRoomPassword] = React.useState("");
     const navigateTo = useNavigate();
-    const toast = useToast();
-    const { socket, setSocket } = useSocket();
     const [messages, setMessages] = React.useState([]);
 
+    // If the room password has been asked then,
     // Hit api to join room
-    React.useEffect(() => {
-        if (!roomData.askPassword && roomPassword) {
-            joinRoom(roomid, roomPassword, state.accessToken)
-                .then((room) => {
-                    dispatch({ type: "ROOM_FETCHED", room });
-                    // Establish a socket connection
-                    const sock = socketConnection();
-                    setSocket(sock);
-                })
-                .catch((error) => {
-                    dispatch({ type: "ERROR", error });
-                });
-        }
-    }, [roomData.askPassword]);
+    useJoinRoom(roomPassword);
 
-    // Emitting socket events
-    React.useEffect(() => {
-        if (!socket) return;
-        socketHandler(socket, state.accessToken, roomid, toast);
-        return () => {
-            socket.off("room:user-left");
-            socket.off("room:new-user-joined");
-            socket.off("room:join");
-            socket.off("connect_error");
-        };
-    }, [socket]);
+    // Only connects to socket server when there is a socket object
+    useSocketHandler();
 
     // Ask for room password
     if (roomData.askPassword) {
