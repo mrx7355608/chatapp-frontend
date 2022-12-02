@@ -63,13 +63,7 @@ export default function CreateRoom() {
     };
     return (
         <>
-            <Button
-                pt="0.5"
-                color="white"
-                bgColor="#F3664C"
-                mr="8"
-                onClick={onOpen}
-            >
+            <Button pt="0.5" colorScheme="purple" mr="8" onClick={onOpen}>
                 Create Room
             </Button>
             <Modal isOpen={isOpen} onClose={onClose}>

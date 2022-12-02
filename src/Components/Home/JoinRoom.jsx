@@ -27,7 +27,7 @@ export default function JoinRoom() {
 
     return (
         <>
-            <Button pt="0.5" color="white" bgColor="#F3664C" onClick={onOpen}>
+            <Button pt="0.5" colorScheme="purple" onClick={onOpen}>
                 Join Room
             </Button>
             <Modal isOpen={isOpen} onClose={onClose}>

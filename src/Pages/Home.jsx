@@ -12,7 +12,7 @@ export default function Home() {
             alignItems="center"
             justify="center"
         >
-            <Heading textAlign="center" fontSize="5xl">
+            <Heading color="white" textAlign="center" fontSize="5xl">
                 Lets chat...
             </Heading>
             <Box mt="8" w="max-content" mx="auto">
