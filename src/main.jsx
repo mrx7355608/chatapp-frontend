@@ -1,19 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
 import "./assets/main.css";
 // Contexts
 import { AuthProvider } from "./Contexts/AuthContext";
-// Theme
-import myTheme from "./theme";
 // Pages
 import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
 // import GuestRoutes from "./Components/GuestRoute";
 // import ProtectedRoutes from "./Components/ProtectedRoutes";
 import RoomProvider from "./Contexts/RoomContext";
 import SocketProvider from "./Contexts/SocketContext";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -53,11 +51,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    // <React.StrictMode>
-    <ChakraProvider theme={myTheme}>
+    <ChakraProvider>
         <AuthProvider>
             <RouterProvider router={router} />
         </AuthProvider>
     </ChakraProvider>
-    // {/* </React.StrictMode> */}
 );
