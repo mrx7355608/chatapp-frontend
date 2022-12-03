@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import App from "./App";
 import "./assets/main.css";
 // Contexts
@@ -11,7 +12,7 @@ import RootErrorBoundary from "./Components/Errors/RootErrorBoundary";
 // import ProtectedRoutes from "./Components/ProtectedRoutes";
 import RoomProvider from "./Contexts/RoomContext";
 import SocketProvider from "./Contexts/SocketContext";
-import { ChakraProvider } from "@chakra-ui/react";
+import myTheme from "./theme";
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Signup = React.lazy(() => import("./Pages/Signup"));
@@ -51,7 +52,8 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <ChakraProvider>
+    <ChakraProvider theme={myTheme}>
+        <ColorModeScript initialColorMode={myTheme.config.initialColorMode} />
         <AuthProvider>
             <RouterProvider router={router} />
         </AuthProvider>
