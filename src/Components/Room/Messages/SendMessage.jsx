@@ -35,7 +35,7 @@ export default function SendMessage({ setMessages }) {
     };
 
     return (
-        <Flex alignItems="center">
+        <Flex w="full" alignItems="center">
             <form
                 style={{ width: "100%" }}
                 onSubmit={(e) => {
@@ -45,16 +45,14 @@ export default function SendMessage({ setMessages }) {
             >
                 <Input
                     variant="outline"
-                    borderColor="red.500"
-                    border="2px"
                     placeholder="Type your message here."
                     pt="1"
                     size="lg"
                     flex="3"
-                    w="70%"
+                    w="83%"
                     ref={msgRef}
                 />
-                <Button colorScheme="blue" mx="3">
+                <Button colorScheme="orange" mx="3">
                     <BsEmojiWink size="20px" />
                 </Button>
                 <Button pt="1" type="submit" colorScheme="green">

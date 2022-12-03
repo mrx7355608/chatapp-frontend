@@ -46,7 +46,7 @@ export default function UsersContainer() {
             overflow="scroll"
             scrollBehavior="smooth"
             p="4"
-            h="100vh"
+            h="90vh"
         >
             {loading ? (
                 <Spinner />

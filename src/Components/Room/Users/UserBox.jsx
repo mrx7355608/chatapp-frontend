@@ -3,7 +3,7 @@ import { Image, Flex, Text } from "@chakra-ui/react";
 
 export default function UserBox({ user }) {
     return (
-        <Flex p="3" rounded="lg" my="2" alignItems="center">
+        <Flex bgColor="gray.900" p="3" rounded="lg" my="2" alignItems="center">
             <Image
                 w="40px"
                 rounded="full"

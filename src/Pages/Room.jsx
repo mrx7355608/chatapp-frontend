@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Spinner, Text, Flex, useColorMode } from "@chakra-ui/react";
+import { Box, Spinner, Text, Flex } from "@chakra-ui/react";
 // Contexts
 import { useRoom } from "../Contexts/RoomContext";
 // Components
@@ -15,7 +15,6 @@ import useSocketHandler from "../Hooks/useSocketHandler";
 import useJoinRoom from "../Hooks/useJoinRoom";
 
 export default function Room() {
-    const { colorMode } = useColorMode();
     const { roomData } = useRoom();
     const [roomPassword, setRoomPassword] = React.useState("");
     const navigateTo = useNavigate();
@@ -41,15 +40,26 @@ export default function Room() {
 
     if (roomData.loading) {
         return (
-            <Box>
-                <Spinner mb="3" />
+            <Flex
+                direction="column"
+                alignItems="center"
+                justify="center"
+                w="100vw"
+                h="80vh"
+            >
+                <Spinner mx="auto" mb="3" />
                 <Text>Joining room</Text>
-            </Box>
+            </Flex>
         );
     }
 
     if (roomData.error) {
-        return <RoomError error={roomData.error} />;
+        return (
+            <RoomError
+                setRoomPassword={setRoomPassword}
+                error={roomData.error}
+            />
+        );
     }
 
     return (
@@ -57,7 +67,7 @@ export default function Room() {
             <UsersContainer />
             <Box
                 height="full"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.700"}
+                bgColor="gray.900"
                 width="full"
                 p="8"
                 mx="3"

@@ -55,6 +55,9 @@ export default function CreateRoom() {
             })
             .catch((err) => {
                 setLoading(false);
+                setTimeout(() => {
+                    setError(null);
+                }, 3000);
                 if (err.response) {
                     return setError(err.response.data.message);
                 }
@@ -73,7 +76,17 @@ export default function CreateRoom() {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <FormControl>
-                            <Text>{error}</Text>
+                            {error && (
+                                <Text
+                                    p="3"
+                                    rounded="md"
+                                    color="red.800"
+                                    bgColor="red.200"
+                                    my="3"
+                                >
+                                    {error}
+                                </Text>
+                            )}
                             <FormLabel>Room name</FormLabel>
                             <Input
                                 onChange={(e) => handleChange(e)}
