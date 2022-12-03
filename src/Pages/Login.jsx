@@ -11,14 +11,8 @@ export default function Signup() {
 
     return (
         <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
-            <Container
-                maxWidth="400px"
-                rounded="lg"
-                my="4"
-                p="4"
-                bgColor={colorMode === "light" ? "gray.50" : "gray.700"}
-            >
-                <Heading textAlign="center" mt="6" mb="8">
+            <Container maxWidth="350px" rounded="lg" p="4">
+                <Heading textAlign="center" mb="3">
                     Login
                 </Heading>
                 {/* LOGIN FORM */}
@@ -29,7 +23,7 @@ export default function Signup() {
                     my="5"
                 >
                     Don't have an account?
-                    <Text as="b" color="red.500">
+                    <Text as="b" color="orange.400">
                         <Link to="/signup"> Signup</Link>
                     </Text>
                 </Text>

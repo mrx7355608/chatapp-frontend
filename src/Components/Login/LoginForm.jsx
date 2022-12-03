@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Text, useColorMode, Button } from "@chakra-ui/react";
+import { Input, Text, Button } from "@chakra-ui/react";
 import { useAuth } from "../../Contexts/AuthContext";
 import useLogin from "../../Hooks/useLogin";
 import LoadingFormButton from "../Custom/LoadingFormButton";
@@ -9,7 +9,6 @@ export default function LoginForm() {
         username: "",
         password: "",
     });
-    const { colorMode } = useColorMode();
     const { state } = useAuth();
     const login = useLogin();
     const { error } = state;
@@ -41,29 +40,27 @@ export default function LoginForm() {
             <Input
                 type="text"
                 name="username"
-                variant="filled"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                variant="outline"
                 pt="1.5"
                 size="md"
                 mt="3"
                 placeholder="Username"
                 onChange={(e) => handleChange(e)}
             />
-            <Text color="red.500">
+            <Text mt="1" color="red.500">
                 {error.type === "username" && error.message}
             </Text>
             <Input
                 type="password"
                 name="password"
-                variant="filled"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                variant="outline"
                 pt="1.5"
                 size="md"
                 placeholder="Password"
                 mt="3"
                 onChange={(e) => handleChange(e)}
             />
-            <Text color="red.500">
+            <Text mt="1" color="red.500">
                 {error.type === "password" && error.message}
             </Text>
             {state.isPending ? (
@@ -75,8 +72,7 @@ export default function LoginForm() {
                     size="md"
                     pt="1"
                     w="full"
-                    color="white"
-                    bgColor="#F3664C"
+                    colorScheme="orange"
                 >
                     Login
                 </Button>
