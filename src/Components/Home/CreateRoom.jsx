@@ -103,7 +103,7 @@ export default function CreateRoom() {
                         ) : (
                             <Button
                                 onClick={handleSubmit}
-                                colorScheme="red"
+                                colorScheme="orange"
                                 mr={3}
                             >
                                 Create

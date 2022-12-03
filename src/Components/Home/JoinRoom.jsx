@@ -48,7 +48,7 @@ export default function JoinRoom() {
                     <ModalFooter>
                         <Button
                             onClick={handleJoinRoom}
-                            colorScheme="red"
+                            colorScheme="orange"
                             mr={3}
                         >
                             Join
