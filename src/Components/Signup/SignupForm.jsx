@@ -1,10 +1,9 @@
 import React from "react";
-import { Button, Input, useColorMode } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import LoadingFormButton from "../Custom/LoadingFormButton";
 import useSignup from "../../Hooks/useSignup";
 
 export default function SignupForm() {
-    const { colorMode } = useColorMode();
     const signup = useSignup();
     const [error, setError] = React.useState();
     const [loading, setLoading] = React.useState();
@@ -32,8 +31,7 @@ export default function SignupForm() {
                 type="text"
                 onChange={(e) => handleChange(e)}
                 name="fname"
-                variant="filled"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                variant="outline"
                 pt="1.5"
                 size="md"
                 mt="3"
@@ -44,8 +42,7 @@ export default function SignupForm() {
                 type="text"
                 onChange={(e) => handleChange(e)}
                 name="lname"
-                variant="filled"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                variant="outline"
                 pt="1.5"
                 size="md"
                 mt="3"
@@ -56,8 +53,7 @@ export default function SignupForm() {
                 type="text"
                 onChange={(e) => handleChange(e)}
                 name="username"
-                variant="filled"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                variant="outline"
                 pt="1.5"
                 size="md"
                 mt="3"
@@ -69,8 +65,7 @@ export default function SignupForm() {
                 type="password"
                 onChange={(e) => handleChange(e)}
                 name="password"
-                variant="filled"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                variant="outline"
                 pt="1.5"
                 size="md"
                 placeholder="Password"
@@ -82,8 +77,7 @@ export default function SignupForm() {
                 type="password"
                 onChange={(e) => handleChange(e)}
                 name="confirmPassword"
-                bgColor={colorMode === "light" ? "gray.200" : "gray.600"}
-                variant="filled"
+                variant="outline"
                 pt="1.5"
                 size="md"
                 mt="3"
@@ -100,8 +94,7 @@ export default function SignupForm() {
                     size="md"
                     pt="1"
                     w="full"
-                    color="white"
-                    bgColor="#F3664C"
+                    colorScheme="orange"
                 >
                     Signup
                 </Button>

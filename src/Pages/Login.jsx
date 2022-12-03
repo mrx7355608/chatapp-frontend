@@ -10,7 +10,7 @@ export default function Signup() {
     const { colorMode } = useColorMode();
 
     return (
-        <Flex alignItems="center" justify="center" w="100vw" minHeight="100vh">
+        <Flex alignItems="center" justify="center" w="100vw" minHeight="80vh">
             <Container maxWidth="350px" rounded="lg" p="4">
                 <Heading textAlign="center" mb="3">
                     Login
