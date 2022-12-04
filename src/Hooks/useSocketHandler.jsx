@@ -43,6 +43,7 @@ export default function useSocketHandler() {
             socket.off("room:new-user-joined");
             socket.off("room:join");
             socket.off("connect_error");
+            socket.disconnect();
         };
     }, [socket]);
 }
