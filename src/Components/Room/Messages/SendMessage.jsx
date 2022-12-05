@@ -1,11 +1,13 @@
 import React from "react";
-import { Flex, Input, Button, useToast } from "@chakra-ui/react";
+import EmojiPicker from "emoji-picker-react";
+import { Flex, Input, Button, useToast, Box } from "@chakra-ui/react";
 import { BsEmojiWink } from "react-icons/bs";
 import { useSocket } from "../../../Contexts/SocketContext";
 import { useAuth } from "../../../Contexts/AuthContext";
 
 export default function SendMessage({ setMessages }) {
     const msgRef = React.useRef(null);
+    const [showEmoji, setShowEmoji] = React.useState(false);
     const toast = useToast();
     const { state } = useAuth();
     const { socket } = useSocket();
@@ -52,7 +54,20 @@ export default function SendMessage({ setMessages }) {
                     w="83%"
                     ref={msgRef}
                 />
-                <Button colorScheme="orange" mx="3">
+                <Box pos="absolute" top="20%" right="10%">
+                    {showEmoji && (
+                        <EmojiPicker
+                            onEmojiClick={({ emoji }) => {
+                                msgRef.current.value += emoji;
+                            }}
+                        />
+                    )}
+                </Box>
+                <Button
+                    onClick={() => setShowEmoji(!showEmoji)}
+                    colorScheme="orange"
+                    mx="3"
+                >
                     <BsEmojiWink size="20px" />
                 </Button>
                 <Button pt="1" type="submit" colorScheme="green">

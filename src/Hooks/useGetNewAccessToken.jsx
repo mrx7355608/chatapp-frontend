@@ -8,7 +8,6 @@ export default function useGetNewAccessToken() {
 
     React.useEffect(() => {
         const time = setInterval(async () => {
-            console.log("new");
             const response = await authServices.refreshToken();
             if (!response.data.accessToken) return;
             dispatch({
