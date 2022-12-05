@@ -1,4 +1,5 @@
 import React from "react";
+import { setInterval, clearInterval } from "worker-timers";
 import { useAuth } from "../Contexts/AuthContext";
 import authServices from "../Services/authServices";
 
@@ -6,7 +7,7 @@ export default function useGetNewAccessToken() {
     const { dispatch } = useAuth();
 
     React.useEffect(() => {
-        setTimeout(async () => {
+        const time = setInterval(async () => {
             console.log("new");
             const response = await authServices.refreshToken();
             if (!response.data.accessToken) return;
@@ -15,6 +16,7 @@ export default function useGetNewAccessToken() {
                 token: response.data.accessToken,
                 error: {},
             });
-        }, 40000);
+        }, 480000);
+        return () => clearInterval(time);
     }, []);
 }
