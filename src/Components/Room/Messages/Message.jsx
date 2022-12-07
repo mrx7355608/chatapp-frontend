@@ -23,15 +23,16 @@ export default function Message({ messageObj }) {
             />
 
             <Box
+                maxWidth="350px"
                 mx="3"
                 my="2"
-                bgColor="red.500"
+                bgColor="red.400"
                 px="3"
                 py="1.5"
                 pt="2"
-                rounded="full"
+                rounded="lg"
             >
-                <Text color="white" as="b">
+                <Text color="gray.800" as="b">
                     {message}
                 </Text>
             </Box>
